@@ -1,22 +1,34 @@
-import React from 'react';
-import _ from 'lodash';
-import moment from 'moment-strftime';
+import React from 'react'
+import _ from 'lodash'
+import moment from 'moment-strftime'
 
-import components, {Layout} from '../components/index';
-import {getPages, Link, safePrefix} from '../utils';
+import components, { Layout } from '../components/index'
+import { getPages, Link, safePrefix } from '../utils'
 
 export default class Home extends React.Component {
-    render() {
-        let display_posts = _.orderBy(getPages(this.props.pageContext.pages, '/posts'), 'frontmatter.date', 'desc');
-        return (
-            <Layout {...this.props}>
-              {_.map(_.get(this.props, 'pageContext.frontmatter.sections'), (section, section_idx) => {
-                  let GetSectionComponent = components[_.get(section, 'component')];
-                  return (
-                    <GetSectionComponent key={section_idx} {...this.props} section={section} site={this.props.pageContext.site} />
-                  )
-              })}
-              <div className="post-feed">
+  render() {
+    let display_posts = _.orderBy(
+      getPages(this.props.pageContext.pages, '/posts'),
+      'frontmatter.date',
+      'desc'
+    )
+    return (
+      <Layout {...this.props}>
+        {_.map(
+          _.get(this.props, 'pageContext.frontmatter.sections'),
+          (section, section_idx) => {
+            let GetSectionComponent = components[_.get(section, 'component')]
+            return (
+              <GetSectionComponent
+                key={section_idx}
+                {...this.props}
+                section={section}
+                site={this.props.pageContext.site}
+              />
+            )
+          }
+        )}
+        {/* <div className="post-feed">
                 {_.map(display_posts, (post, post_idx) => (
                 <article key={post_idx} className="post post-card">
                   <div className="post-card-inside">
@@ -43,8 +55,8 @@ export default class Home extends React.Component {
                   </div>
                 </article>
                 ))}
-              </div>
-            </Layout>
-        );
-    }
+              </div> */}
+      </Layout>
+    )
+  }
 }
